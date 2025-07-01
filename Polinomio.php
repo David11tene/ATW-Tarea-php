@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 // Clase abstracta para polinomios
 abstract class PolinomioAbstracto {
     abstract public function evaluar(float $x): float;
