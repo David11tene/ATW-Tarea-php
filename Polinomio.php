@@ -2,28 +2,28 @@
 
 // Clase abstracta para polinomios
 abstract class PolinomioAbstracto {
-    abstract public function evaluar($x);
-    abstract public function derivada();
+    abstract public function evaluar(float $x): float;
+    abstract public function derivada(): array;
 }
 
 // Clase concreta que representa un polinomio
 class Polinomio extends PolinomioAbstracto {
-    private $terminos; // array asociativo: grado => coeficiente
+    private array $terminos; // array asociativo: grado => coeficiente
 
     public function __construct(array $terminos) {
         krsort($terminos); // orden descendente por grado
         $this->terminos = $terminos;
     }
 
-    public function evaluar($x) {
-        $resultado = 0;
+    public function evaluar(float $x): float {
+        $resultado = 0.0;
         foreach ($this->terminos as $grado => $coef) {
             $resultado += $coef * pow($x, $grado);
         }
         return $resultado;
     }
 
-    public function derivada() {
+    public function derivada(): array {
         $derivados = [];
         foreach ($this->terminos as $grado => $coef) {
             if ($grado > 0) {
@@ -33,13 +33,13 @@ class Polinomio extends PolinomioAbstracto {
         return $derivados;
     }
 
-    public function getTerminos() {
+    public function getTerminos(): array {
         return $this->terminos;
     }
 }
 
 // Función que suma dos polinomios representados como arrays asociativos
-function sumarPolinomios(array $p1, array $p2) {
+function sumarPolinomios(array $p1, array $p2): array {
     $resultado = $p1;
 
     foreach ($p2 as $grado => $coef) {
@@ -62,7 +62,7 @@ function sumarPolinomios(array $p1, array $p2) {
 }
 
 // Función para leer un polinomio desde consola
-function leerPolinomio($nombre) {
+function leerPolinomio(string $nombre): array {
     echo "Ingrese el polinomio '$nombre'.\n";
     $terminos = [];
     $cantidad = (int) readline("¿Cuántos términos tiene?: ");
@@ -77,7 +77,7 @@ function leerPolinomio($nombre) {
 }
 
 // Función para mostrar un polinomio
-function mostrarPolinomio(array $p) {
+function mostrarPolinomio(array $p): string {
     krsort($p);
     $str = '';
     foreach ($p as $grado => $coef) {
@@ -92,7 +92,7 @@ function mostrarPolinomio(array $p) {
 }
 
 // Función principal
-function manejarPolinomios() {
+function manejarPolinomios(): void {
     echo "=== Manejo de Polinomios ===\n";
 
     $p1 = leerPolinomio("P1");
