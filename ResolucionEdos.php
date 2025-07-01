@@ -185,6 +185,4 @@ $parametros3 = [
 
 $resultado3 = aplicarMetodo($condicionesIniciales3, $parametros3, 'cuadratica');
 
-echo "Programa finalizado.\n";
-
 ?>

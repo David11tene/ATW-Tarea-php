@@ -58,11 +58,29 @@ class Matriz extends MatrizAbstracta {
         $m1 = $this->datos;
         $m2 = $otra->getDatos();
         
-        // Obtener las claves de filas y columnas
-        $filasM1 = array_keys($m1);
-        $columnasM1 = array_keys(reset($m1));
-        $filasM2 = array_keys($m2);
-        $columnasM2 = array_keys(reset($m2));
+        // Obtener las claves de filas y columnas manualmente
+        $filasM1 = [];
+        $columnasM1 = [];
+        $filasM2 = [];
+        $columnasM2 = [];
+        
+        foreach ($m1 as $clave => $fila) {
+            $filasM1[] = $clave;
+            if (empty($columnasM1)) {
+                foreach ($fila as $claveCol => $valor) {
+                    $columnasM1[] = $claveCol;
+                }
+            }
+        }
+        
+        foreach ($m2 as $clave => $fila) {
+            $filasM2[] = $clave;
+            if (empty($columnasM2)) {
+                foreach ($fila as $claveCol => $valor) {
+                    $columnasM2[] = $claveCol;
+                }
+            }
+        }
         
         $result = [];
 
@@ -85,7 +103,7 @@ class Matriz extends MatrizAbstracta {
         return new Matriz($result);
     }
 
-        public function inversa(): ?Matriz {
+    public function inversa(): ?Matriz {
         // Verificar que sea matriz cuadrada
         if (!$this->esCuadrada) {
             echo "Error: Solo las matrices cuadradas tienen inversa. Dimensión actual: {$this->dimension}\n";
@@ -93,8 +111,19 @@ class Matriz extends MatrizAbstracta {
         }
 
         $matriz = $this->datos;
-        $filas = array_keys($matriz);
-        $columnas = array_keys(reset($matriz));
+        
+        // Obtener claves de filas y columnas manualmente
+        $filas = [];
+        $columnas = [];
+        
+        foreach ($matriz as $clave => $fila) {
+            $filas[] = $clave;
+            if (empty($columnas)) {
+                foreach ($fila as $claveCol => $valor) {
+                    $columnas[] = $claveCol;
+                }
+            }
+        }
         
         // Crear matriz identidad con claves asociativas
         $identidad = [];
@@ -171,8 +200,19 @@ class Matriz extends MatrizAbstracta {
 
 // Función recursiva para calcular el determinante
 function determinante(array $matriz): float {
-    $filas = array_keys($matriz);
-    $columnas = array_keys(reset($matriz));
+    // Obtener claves manualmente
+    $filas = [];
+    $columnas = [];
+    
+    foreach ($matriz as $clave => $fila) {
+        $filas[] = $clave;
+        if (empty($columnas)) {
+            foreach ($fila as $claveCol => $valor) {
+                $columnas[] = $claveCol;
+            }
+        }
+    }
+    
     $n = count($filas);
 
     if ($n == 1) {
